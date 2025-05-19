@@ -65,6 +65,10 @@ class BluetoothViewModel : ViewModel() {
                 }
             }
 
+
+
+
+
             // Register the BroadcastReceiver to listen for ACTION_FOUND intents
             val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
             context.registerReceiver(receiver, filter)
@@ -77,6 +81,10 @@ class BluetoothViewModel : ViewModel() {
         }
     }
 
+
+
+
+
     // Open the app settings screen so the user can manually grant permissions
     private fun openAppSettings(context: Context) {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -84,6 +92,8 @@ class BluetoothViewModel : ViewModel() {
         }
         context.startActivity(intent)
     }
+
+
 
     // Check if Bluetooth is available and enabled
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -97,6 +107,9 @@ class BluetoothViewModel : ViewModel() {
             }
         }
     }
+
+
+
 
     // Turn on Bluetooth directly (works only for Android versions < 13)
     fun turnOnBluetoothDirectly(context: Context) {
@@ -122,8 +135,17 @@ class BluetoothViewModel : ViewModel() {
         }
     }
 
+
+
     // Public function to start scanning manually from outside the ViewModel
     fun startScanning(context: Context) {
         scanNearbyDevices(context)
     }
-} 
+}
+
+
+
+
+
+
+

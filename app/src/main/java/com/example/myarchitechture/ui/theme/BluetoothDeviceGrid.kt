@@ -15,20 +15,31 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.myarchitechture.viewmodel.BluetoothViewModel
+import android.bluetooth.BluetoothManager
 
 // Main Composable function to display a grid of Bluetooth devices
 @Composable
 fun BluetoothDeviceGrid(devices: List<BluetoothDevice>, bluetoothViewModel: BluetoothViewModel) {
     val context = LocalContext.current
-
+// rectify code
     // Get the Bluetooth adapter
-    val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-    val isBluetoothEnabled = bluetoothAdapter?.isEnabled ?: false
+    val bluetoothManager = context.getSystemService(BluetoothManager::class.java)
+    val bluetoothAdapter = bluetoothManager?.adapter
+    val isBluetoothEnabled = bluetoothAdapter?.isEnabled == true
+
+    LaunchedEffect(isBluetoothEnabled) {
+        if (isBluetoothEnabled && devices.isEmpty()) {
+            bluetoothViewModel.startScanning(context)
+        }
+    }
+
+
 
     // Launcher for turning on Bluetooth via system intent (Android 13+)
     val enableBluetoothLauncher = rememberLauncherForActivityResult(
